@@ -1,0 +1,27 @@
+- name: Test loop with lists
+  hosts: localhost
+  gather_facts: no
+  vars:
+    vm_lists:
+
+     - name: my-vm
+       status: Active
+       cluster: my-cluster
+       platform: 5
+       vcpus: 6
+       memory: 24
+
+     - name: my-vm
+       status: Active
+       cluster: my-cluster
+       platform: 5
+       vcpus: 6
+       memory: 24
+
+  tasks:
+    - name: Show test_items
+      ansible.builtin.debug:
+        msg: "vm.platform is type {{ vm.platform | type_debug }}. vm.name is type {{ vm.name | type_debug }}"
+      loop: "{{ vm_lists }}"
+      loop_control:
+        loop_var: vm
